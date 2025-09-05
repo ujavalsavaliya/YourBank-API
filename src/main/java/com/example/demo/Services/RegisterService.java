@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
 
@@ -43,6 +44,7 @@ public class RegisterService {
         deposit.setAmount((long)5000);
         deposit.setDepositType("First Deposit");
         deposit.setUsername(registerEntity.getUsername());
+        deposit.assignDate(LocalDateTime.now());
         depositRepo.save(deposit);
 
         userRepo.save(registerEntity);

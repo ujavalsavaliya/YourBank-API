@@ -67,7 +67,11 @@ public class TrasitionService {
                                                     .map(t -> new TrasitionEntity("TRANSFER", t.getAmount(), t.getDate() , t.getAccno()))
                                     )
                             )
-                            .sorted(Comparator.comparing(TrasitionEntity::getDate).reversed())
+                            .sorted(Comparator.comparing(
+                                    TrasitionEntity::getDate,
+                                    Comparator.nullsLast(Comparator.naturalOrder())
+                            ).reversed())
+
                             .toList();
 
             return ResponseEntity.ok(allTransactions);

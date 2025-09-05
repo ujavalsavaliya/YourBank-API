@@ -1,11 +1,14 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Entity.DepositEntity;
+import com.example.demo.Entity.RegisterEntity;
 import com.example.demo.Entity.TransferEntity;
 import com.example.demo.Entity.WithdrawEntity;
+import com.example.demo.Repositry.UserRepo;
 import com.example.demo.Services.BankingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,6 +18,9 @@ public class BankingController {
 
     @Autowired
     private BankingService bankingService;
+
+    @Autowired
+    private UserRepo userRepo;
 
     @GetMapping("/balance/{username}")
     public ResponseEntity<Long> getBalance(@PathVariable String username) {
@@ -34,5 +40,11 @@ public class BankingController {
     @PostMapping("/transfer")
     public ResponseEntity<?> transfer(@RequestBody TransferEntity transfer){
         return bankingService.transfer(transfer);
+    }
+
+    @GetMapping("/holder/{username}")
+    public ResponseEntity<?> getAccHolder(@PathVariable String username){
+        RegisterEntity registerEntity = userRepo.findByUsername(username);
+        return ResponseEntity.ok().body(registerEntity);
     }
 }

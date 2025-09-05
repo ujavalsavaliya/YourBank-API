@@ -6,10 +6,7 @@ import com.example.demo.Services.LoginService;
 import com.example.demo.Services.RegisterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class RegisterController {
@@ -35,4 +32,13 @@ public class RegisterController {
         return ResponseEntity.ok().body("You are right");
     }
 
+    @PostMapping("/verifyOtp/{username}/{otp}")
+    public ResponseEntity<?> verifyOtp(@PathVariable String username,@PathVariable String otp){
+        return loginService.verifyOtp(username,otp);
+    }
+
+    @GetMapping("/resend/{username}")
+    public ResponseEntity<?> resendOtp(@PathVariable String username){
+        return loginService.ResendOtp(username);
+    }
 }
